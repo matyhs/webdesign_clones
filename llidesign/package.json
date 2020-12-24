@@ -1,0 +1,16 @@
+{
+  "name": "llidesign",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "wasm-pack build --target web && rollup ./bundle.config.js --format iife --file ./pkg/bundle.js",
+    "build-css": "npx tailwindcss-cli build ./static/styles.css -c ./tailwind.config.js -o ./dist/compiled.css",
+    "start": "miniserve ."
+  },
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "postcss": "^8.2.1",
+    "tailwindcss": "^2.0.2"
+  }
+}
