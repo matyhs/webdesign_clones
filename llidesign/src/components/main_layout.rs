@@ -1,5 +1,7 @@
 use yew::prelude::*;
 
+use crate::components::*;
+
 pub struct MainLayout {}
 
 impl Component for MainLayout {
@@ -12,9 +14,7 @@ impl Component for MainLayout {
 
     fn view(&self) -> Html {
         html!{
-            <div>
-                
-            </div>
+            <gallery::Gallery />
         }
     }
 
