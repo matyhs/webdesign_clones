@@ -10,7 +10,8 @@ pub struct MainLayout {
 
 pub enum Msg {
     AccessMenu(bool),
-    AccessMenuOption(overlay::Msg)
+    AccessMenuOption(overlay::Msg),
+    CloseSideMenu
 }
 
 impl Component for MainLayout {
@@ -26,7 +27,7 @@ impl Component for MainLayout {
             <>
                 <gallery::Gallery />
                 <overlay::Overlay show_component=self.show_overlay onmenuoptionclick=self.link.callback(Msg::AccessMenuOption)/>
-                <sidebar::Sidebar show_component=self.show_sidebar/>
+                <sidebar::Sidebar show_component=self.show_sidebar onclose=self.link.callback(|_| Msg::CloseSideMenu)/>
                 <header::Header toggle=self.show_overlay onmenuclick=self.link.callback(Msg::AccessMenu)/>
             </>
         }
@@ -42,6 +43,10 @@ impl Component for MainLayout {
             Msg::AccessMenuOption(option) => {
                 self.show_sidebar = true;
                 self.show_overlay = false;
+                true
+            },
+            Msg::CloseSideMenu => {
+                self.show_sidebar = false;
                 true
             }
         }

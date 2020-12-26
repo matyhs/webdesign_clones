@@ -1,21 +1,28 @@
 use yew::prelude::*;
 
 pub struct Sidebar {
-    show_component: bool
+    show_component: bool,
+    onclose: Callback<()>,
+    link: ComponentLink<Self>
+}
+
+pub enum Msg {
+    CloseSideMenu
 }
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
     #[prop_or(false)]
-    pub show_component: bool
+    pub show_component: bool,
+    pub onclose: Callback<()>
 }
 
 impl Component for Sidebar {
     type Properties = Props;
-    type Message = ();
+    type Message = Msg;
 
-    fn create(props: Self::Properties, _: ComponentLink<Self>) -> Self {
-        Sidebar { show_component: props.show_component }
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        Sidebar { show_component: props.show_component, onclose: props.onclose, link: link }
     }
 
     fn view(&self) -> Html {
@@ -46,7 +53,7 @@ impl Component for Sidebar {
                             {"Phasellus ac lectus auctor libero porttitor suscipit. Ut interdum eleifend dolor. Integer finibus ipsum justo, consectetur egestas risus commodo non. Sed venenatis neque ex, non semper elit faucibus id. Etiam dignissim lorem ac condimentum rutrum. Vivamus quis convallis magna. Mauris non felis hendrerit, rhoncus turpis at, posuere sem. Ut vulputate sapien a quam tincidunt sagittis. Fusce enim nibh, maximus eu facilisis non, aliquet vitae nulla. Quisque convallis risus nisi, non condimentum nibh scelerisque nec. Sed nec blandit justo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas."}
                         </p>
                     </div>
-                    <div class="text-sm">
+                    <div onclick=self.link.callback(|_| Msg::CloseSideMenu) class="text-sm cursor-pointer">
                         {"Close"}
                     </div>
                 </div>
@@ -56,8 +63,13 @@ impl Component for Sidebar {
         }
     }
 
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        true
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            Msg::CloseSideMenu => {
+                self.onclose.emit(());
+                true
+            }
+        }
     }
 
     fn change(&mut self, props: Self::Properties) -> bool {
