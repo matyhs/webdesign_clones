@@ -29,7 +29,7 @@ impl Component for Gallery {
         let onbackwardclick = self.link.callback(|_| Msg::Backward);
         html! { 
             <div class="w-screen h-screen">
-                <img class="w-full h-full p-8 top-0 left-0 absolute transition ease-out" src=self.current/>
+                <img class="w-full h-full p-8 top-0 left-0 absolute" src=self.current/>
                 <svg onclick=onforwardclick class="fill-current text-white absolute top-1/2 right-8 w-20 h-20 cursor-pointer" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                     <path d="m256 488a24 24 0 0 1 -16.971-40.971l191.03-191.029-191.03-191.029a24 24 0 0 1 33.942-33.942l208 208a24 24 0 0 1 0 33.942l-208 208a23.928 23.928 0 0 1 -16.971 7.029zm-191.029-7.029 208-208a24 24 0 0 0 0-33.942l-208-208a24 24 0 0 0 -33.942 33.942l191.03 191.029-191.03 191.029a24 24 0 0 0 33.942 33.942z"/>
                 </svg>

@@ -14,7 +14,10 @@ impl Component for MainLayout {
 
     fn view(&self) -> Html {
         html!{
-            <gallery::Gallery />
+            <>
+                <gallery::Gallery />
+                <header::Header />
+            </>
         }
     }
 
