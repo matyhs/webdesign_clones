@@ -57,7 +57,8 @@ impl Component for Header {
         }
     }
 
-    fn change(&mut self, _: Self::Properties) -> bool {
-        false
+    fn change(&mut self, props: Self::Properties) -> bool {
+        self.toggle = props.toggle;
+        true
     }
 }
