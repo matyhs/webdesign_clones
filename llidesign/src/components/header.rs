@@ -1,25 +1,39 @@
 use yew::prelude::*;
 
 pub struct Header {
+    toggle: bool,
+    onmenuclick: Callback<bool>,
+    link: ComponentLink<Self>
+}
 
+pub enum Msg {
+    MenuToggle
+}
+
+#[derive(Clone, PartialEq, Properties)]
+pub struct Props {
+    #[prop_or(false)]
+    pub toggle: bool,
+    pub onmenuclick: Callback<bool>
 }
 
 impl Component for Header {
-    type Properties = ();
-    type Message = ();
+    type Properties = Props;
+    type Message = Msg;
     
-    fn create(_: Self::Properties, _:ComponentLink<Self>) -> Self {
-        Header {}
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        Header { toggle: props.toggle, onmenuclick: props.onmenuclick, link:  link }
     }
 
     fn view(&self) -> Html {
+        let menuclick = self.link.callback(|_| Msg::MenuToggle);   
         html! {
             <div class="absolute top-10 w-screen">
                 <svg class="bg-white w-24 h-24 relative left-12 inline cursor-pointer">    
                     <text fill="gray" class="text-5xl font-mono" x="10" y="55">{"MNQ"}</text>
                     <text fill="gray" class="text-md text-gray-400 font-thin font-mono" x="25" y="75">{"CLONE"}</text>
                 </svg>
-                <div class="bg-white w-24 h-8 absolute right-12 inline cursor-pointer border border-solid border-gray-400">
+                <div class="bg-white w-24 h-8 absolute right-12 inline cursor-pointer border border-solid border-gray-400" onclick=menuclick>
                     <svg class="w-16 h-8 relative inline">
                         <text fill="gray" class="text-lg font-mono inline" x="10" y="22">{"Menu"}</text>
                     </svg>
@@ -33,11 +47,17 @@ impl Component for Header {
         }
     }
 
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        true
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match  msg {
+            Msg::MenuToggle => {
+                self.toggle = !self.toggle;
+                self.onmenuclick.emit(self.toggle);
+                true
+            }
+        }
     }
 
     fn change(&mut self, _: Self::Properties) -> bool {
-        true
+        false
     }
 }

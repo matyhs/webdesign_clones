@@ -2,30 +2,43 @@ use yew::prelude::*;
 
 use crate::components::*;
 
-pub struct MainLayout {}
+pub struct MainLayout {
+    show_overlay: bool,
+    link: ComponentLink<Self>
+}
+
+pub enum Msg {
+    AccessMenu(bool)
+}
 
 impl Component for MainLayout {
     type Properties = ();
-    type Message = ();
+    type Message = Msg;
 
-    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
-        MainLayout {}
+    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+        MainLayout { show_overlay: false, link: link }
     }
 
     fn view(&self) -> Html {
         html!{
             <>
                 <gallery::Gallery />
-                <header::Header />
+                <overlay::Overlay show_component=self.show_overlay/>
+                <header::Header toggle=self.show_overlay onmenuclick=self.link.callback(Msg::AccessMenu)/>
             </>
         }
     }
 
-    fn update(&mut self, _: Self::Message) -> ShouldRender {
-        true
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            Msg::AccessMenu(toggle) => {
+                self.show_overlay = toggle;
+                true
+            }
+        }
     }
 
     fn change(&mut self, _: Self::Properties) -> bool {
-        true
+        false
     }
 }
