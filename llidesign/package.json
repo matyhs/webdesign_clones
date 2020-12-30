@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build-wasm && yarn rollup -c",
-    "build-wasm": "wasm-pack build --target web --out-dir ./dist/js",
+    "build-wasm": "yarn wasm-pack build --target web --out-dir ./dist/js",
     "start": "miniserve ./dist --index index.html"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
   "devDependencies": {
     "rollup": "^2.35.1",
     "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-postcss": "^4.0.0"
+    "rollup-plugin-postcss": "^4.0.0",
+    "wasm-pack": "^0.9.1"
   }
 }
