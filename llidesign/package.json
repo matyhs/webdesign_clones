@@ -4,13 +4,18 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "wasm-pack build --target web && rollup ./bundle.config.js --format iife --file ./pkg/bundle.js",
-    "build-css": "npx tailwindcss-cli build ./static/styles.css -c ./tailwind.config.js -o ./dist/compiled.css",
-    "start": "miniserve ."
+    "build": "yarn build-wasm && yarn rollup -c",
+    "build-wasm": "wasm-pack build --target web --out-dir ./dist/js",
+    "start": "miniserve ./dist --index index.html"
   },
   "dependencies": {
     "autoprefixer": "^10.1.0",
     "postcss": "^8.2.1",
     "tailwindcss": "^2.0.2"
+  },
+  "devDependencies": {
+    "rollup": "^2.35.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-postcss": "^4.0.0"
   }
 }
