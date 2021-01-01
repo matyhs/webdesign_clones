@@ -51,7 +51,7 @@ impl Component for Header {
                     <text fill="gray" class="text-md text-gray-400 font-thin font-mono" x="25" y="75">{"CLONE"}</text>
                 </svg>
                 <div class="bg-white w-24 h-8 absolute right-12 inline cursor-pointer border border-solid border-gray-400" onclick=menuclick>
-                    <span class="text-gray-400 uppercase text-xl relative inline p-1">
+                    <span class="text-gray-400 uppercase text-xl font-thin relative inline p-1">
                         {"Menu"}
                     </span>
                     <div class="inline-block w-5">
