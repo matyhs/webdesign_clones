@@ -26,7 +26,24 @@ impl Component for Header {
     }
 
     fn view(&self) -> Html {
-        let menuclick = self.link.callback(|_| Msg::MenuToggle);   
+        let burger_animation = "h-0.5 w-5 rounded mt-1 transition duration-500 ease-in-out";
+        let cross_forward = if self.toggle {
+            "transform rotate-45 translate-x-0.5 translate-y-1.5"
+        } else {
+            ""
+        };
+        let cross_backward = if self.toggle {
+            "transform -rotate-45 translate-x-0.5 -translate-y-1.5"
+        } else {
+            ""
+        };
+        let middle_color  = if self.toggle {
+            "bg-transparent"
+        } else {
+            "bg-gray-400"
+        };
+        let menuclick = self.link.callback(|_| Msg::MenuToggle);
+
         html! {
             <div class="absolute top-10 w-screen">
                 <svg class="bg-white w-24 h-24 relative left-12 inline cursor-pointer">    
@@ -34,14 +51,17 @@ impl Component for Header {
                     <text fill="gray" class="text-md text-gray-400 font-thin font-mono" x="25" y="75">{"CLONE"}</text>
                 </svg>
                 <div class="bg-white w-24 h-8 absolute right-12 inline cursor-pointer border border-solid border-gray-400" onclick=menuclick>
-                    <svg class="w-16 h-8 relative inline">
-                        <text fill="gray" class="text-lg font-mono inline" x="10" y="22">{"Menu"}</text>
-                    </svg>
-                    <svg class="w-4 h-4 inline mt-1" viewBox="0 0 384 384">
-                        <path d="m368 154.667969h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
-                        <path d="m368 32h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
-                        <path d="m368 277.332031h-352c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h352c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/>
-                    </svg>
+                    <span class="text-gray-400 uppercase text-xl relative inline p-1">
+                        {"Menu"}
+                    </span>
+                    <div class="inline-block w-5">
+                        <div class=("bg-gray-400", burger_animation, cross_forward)>
+                        </div>
+                        <div class=(burger_animation, middle_color)>
+                        </div>
+                        <div class=("bg-gray-400", burger_animation, cross_backward)>
+                        </div>  
+                    </div>
                 </div>
             </div>
         }
