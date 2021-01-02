@@ -32,20 +32,22 @@ impl Component for Overlay {
     }
 
     fn view(&self) -> Html {
-        if self.show_component {
-            html! {
-                <div class="absolute top-0 left-0 w-screen h-screen flex flex-col flex-wrap content-center justify-center bg-white bg-opacity-80 text-center uppercase text-3xl font-thin">
-                    <div onclick=self.link.callback(|_| Msg::OurService) class="cursor-pointer my-3">{"Our Services"}</div>
-                    <div class="cursor-pointer my-3">{"About Us"}</div>
-                    <div class="cursor-pointer my-3">{"How We Work"}</div>
-                    <div class="cursor-pointer my-3">{"Bespoke Furniture"}</div>
-                    <div class="cursor-pointer my-3">{"Contact Us"}</div>
-                    <div class="cursor-pointer my-3">{"Blog"}</div>
-                    <div class="cursor-pointer my-3">{"Careers"}</div>
-                </div>
-            }
+        let visibility = if self.show_component {
+            "opacity-100 transform scale-y-100"
         } else {
-            html! {}
+            "opacity-0 transform scale-y-0"
+        };
+
+        html! {
+            <div class=("absolute top-0 left-0 w-screen h-screen flex flex-col flex-wrap content-center justify-center bg-white bg-opacity-80 text-center uppercase text-3xl font-thin transition duration-500 ease-in-out", visibility)>
+                <div onclick=self.link.callback(|_| Msg::OurService) class="cursor-pointer my-3">{"Our Services"}</div>
+                <div class="cursor-pointer my-3">{"About Us"}</div>
+                <div class="cursor-pointer my-3">{"How We Work"}</div>
+                <div class="cursor-pointer my-3">{"Bespoke Furniture"}</div>
+                <div class="cursor-pointer my-3">{"Contact Us"}</div>
+                <div class="cursor-pointer my-3">{"Blog"}</div>
+                <div class="cursor-pointer my-3">{"Careers"}</div>
+            </div>
         }
     }
 
